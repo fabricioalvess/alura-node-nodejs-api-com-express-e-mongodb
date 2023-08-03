@@ -35,6 +35,12 @@ app.put('/livros/:id',(req, res)=>{
     livros[index].id = req.body.id
     res.json(livros)
 })
+app.delete('/livros/:id',(req, res)=>{
+    let {id} = req.params
+    let index = buscarElementoPorId(id)
+    livros.splice(index,1)
+    res.send(`Livro ${id} excluido com sucesso`)
+})
 
 
 function buscarElementoPorId(id){
