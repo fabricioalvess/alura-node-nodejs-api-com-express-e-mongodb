@@ -6,8 +6,8 @@ class LivroController{
     try{
       await livros.find()
         .populate("autor")
-        .exec((err, livros)=>{
-          res.status(200).json(livros);
+        .exec((err, x)=>{
+          res.status(200).json(x);
         }); 
     }catch(err){
       res.status(500).send(err.message);
