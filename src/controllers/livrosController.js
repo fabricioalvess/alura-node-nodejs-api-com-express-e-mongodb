@@ -2,23 +2,23 @@ import livros from "../models/Livro.js";
 
 class LivroController{
 
-  static listarLivros = async(req,res)=>{
+  static listarLivros = async(req,res, next)=>{
     try{
-      await livros.find()
+      livros.find()
         .populate("autor")
         .exec((err, x)=>{
           res.status(200).json(x);
         }); 
     }catch(err){
-      res.status(500).send(err.message);
+      next(err);
     }
   };
 
   static cadastraLivro = async (req,res, next)=>{
     try{
       let livro = new livros(req.body); 
-      livro.save(livro);
-      res.status(201).send("livro cadastrado com sucesso");
+      const novoLivro =  await livro.save(livro);
+      res.status(201).send(novoLivro.toJSON());
     }catch(err){
       next(err);
     }
